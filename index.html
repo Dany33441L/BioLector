@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f5f0e6">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>BioLector</title>
+<style>:root{color-scheme:light;--bg:#f5f0e6;--sf:#fbf8f2;--ink:#1c2230;--mut:#6e675a;--ac:#1f3c9e;--acd:#162d78;--acink:#fbf8f2;--ln:#e0d7c5;--tr:#e8ecf5;--serif:Palatino,"Palatino Linotype","Iowan Old Style",Georgia,serif}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+button,input,textarea{font:inherit;color:inherit}
+header{position:sticky;top:0;z-index:5;background:var(--bg);display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top,0px) + 10px) 18px 10px;border-bottom:1px solid var(--ln)}
+.brand{display:flex;align-items:center;gap:10px;font:600 21px var(--serif);cursor:pointer}
+.lg{width:38px;height:38px;border-radius:11px}
+.ic{background:none;border:1px solid var(--ln);border-radius:10px;padding:7px 14px;cursor:pointer;color:var(--mut)}
+main{padding:22px 18px 30px;max-width:720px;margin:0 auto}
+.hi{font:600 28px/1.2 var(--serif);margin:0 0 6px}
+.sub{color:var(--mut);margin:0 0 18px}
+#f{display:flex;gap:8px}
+#q{flex:1;min-width:0;padding:14px 16px;border:1.5px solid var(--ln);border-radius:14px;background:var(--sf)}
+#q:focus,button:focus-visible,input:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
+.go{background:var(--ac);color:var(--acink);border:0;border-radius:14px;padding:0 20px;font-weight:600;cursor:pointer}
+.go:active{background:var(--acd)}
+.fl{display:flex;gap:16px;margin:10px 2px 4px;font-size:14px;color:var(--mut)}
+.fl label{display:flex;gap:6px;align-items:center}
+.fl input{accent-color:var(--ac)}
+.lbl{margin:22px 0 10px;font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut)}
+.tp{display:flex;flex-wrap:wrap;gap:8px}
+.tp button{background:var(--sf);border:1px solid var(--ln);border-radius:999px;padding:9px 15px;cursor:pointer}
+.tp button:active{border-color:var(--ac)}
+.note{color:var(--mut);font-size:14px;margin:12px 0}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:16px;margin-bottom:12px;cursor:pointer;box-shadow:0 1px 2px #3a2e1412}
+.src{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ac);font-weight:600}
+.card h3{font:600 18px/1.35 var(--serif);margin:4px 0 6px}
+.card .es{color:var(--ac);font-weight:600;margin:0 0 6px}
+.meta{color:var(--mut);font-size:14px}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.acts button,.acts a{border:1px solid var(--ln);background:none;border-radius:10px;padding:8px 13px;font-size:14px;cursor:pointer;text-decoration:none;color:inherit}
+.acts .tr{background:var(--ac);color:var(--acink);border-color:var(--ac);font-weight:600}
+.out{margin-top:12px;background:var(--tr);border-radius:12px;padding:12px 14px;font-size:15px}
+.out h4{margin:0 0 6px;font:600 16px var(--serif)}.out p{margin:6px 0}
+details{margin-top:10px;font-size:14px;color:var(--mut)}summary{cursor:pointer}
+#nav{position:fixed;left:0;right:0;bottom:0;z-index:10;display:flex;background:var(--sf);border-top:1px solid var(--ln);padding-bottom:env(safe-area-inset-bottom,0px)}
+#nav button{flex:1;background:none;border:0;padding:9px 0 8px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;color:var(--mut);cursor:pointer}
+#nav button.on{color:var(--ac);font-weight:600}
+#nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round;stroke-linecap:round}
+.m{max-width:88%;padding:10px 14px;border-radius:16px;margin:8px 0;white-space:pre-wrap}
+.m.u{margin-left:auto;background:var(--ac);color:var(--acink);border-bottom-right-radius:4px}
+.m.b{background:var(--sf);border:1px solid var(--ln);border-bottom-left-radius:4px}
+.qr2{position:sticky;bottom:calc(64px + env(safe-area-inset-bottom,0px));background:var(--bg);display:flex;gap:8px;padding:10px 0}
+.qr2 input,.qr input{flex:1;min-width:0;padding:12px 14px;border:1.5px solid var(--ln);border-radius:14px;background:var(--sf)}
+#rd{position:fixed;inset:0;z-index:20;background:var(--bg);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+#rd[hidden]{display:none}
+.rh{display:flex;gap:10px;align-items:center;padding:8px 14px;border-bottom:1px solid var(--ln)}
+.rh b{flex:1;font:600 15px/1.3 var(--serif);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#rdb{flex:1;overflow:auto;padding:8px 18px 24px;max-width:720px;width:100%;margin:0 auto}
+#rdb p{margin:0 0 10px;line-height:1.7}
+#rdb h2{font:600 20px var(--serif);margin:20px 0 8px}
+.t2{background:var(--tr);border-radius:10px;padding:9px 12px;margin:0 0 12px;font-size:15.5px}
+#rdb.es .hasT{display:none}
+#qa{max-height:30vh;overflow:auto;padding:0 16px;font-size:15px}
+#qa p{margin:6px 0}#qa .a{white-space:pre-wrap;background:var(--tr);border-radius:10px;padding:8px 12px}
+.qr{display:flex;gap:8px;padding:8px 14px calc(8px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--ln)}
+dialog{border:1px solid var(--ln);border-radius:16px;background:var(--sf);color:var(--ink);width:min(92vw,520px);padding:18px}
+dialog::backdrop{background:#1c223066}
+dialog label{display:block;margin:12px 0 4px;font-weight:600;font-size:14px}
+dialog input,dialog textarea{width:100%;padding:10px;border:1.5px solid var(--ln);border-radius:10px;background:var(--bg)}
+dialog textarea{min-height:150px}
+#rdRef{display:none}
+@media print{
+ header,main,nav,.rh,#rd .acts,#rdSt,#qa,.qr{display:none!important}
+ html,body{height:auto!important;overflow:visible!important;background:#fff!important}
+ #rd{position:static!important;display:block!important;background:#fff;padding:0}
+ #rdRef{display:block!important;border-bottom:1px solid #999;margin-bottom:14px;padding-bottom:8px}
+ #rdRef h1{font:700 20pt Georgia,serif;margin:0 0 6px}
+ #rdRef p{margin:2px 0;font-size:10pt;color:#333;word-break:break-all}
+ #rdb{overflow:visible!important;height:auto!important;max-width:none;padding:0}
+ #rdb p{font-size:11pt;line-height:1.5}
+ #rdb h2{break-after:avoid}
+ .t2{background:none!important;border-left:3px solid #1f3c9e;border-radius:0;font-size:11pt;padding:2px 10px}
+ @page{margin:16mm}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand" id="brand"><img class="lg" src="icon-192.png" alt=""><span>BioLector</span></div>
+  <button class="ic" id="cfgBtn" type="button">Ajustes</button>
+</header>
+<main>
+  <section id="v1" class="view">
+    <h2 class="hi">¿Qué quieres aprender hoy?</h2>
+    <p class="sub">Artículos y libros científicos de acceso abierto, traducidos al español.</p>
+    <form id="f"><input id="q" type="search" placeholder="Busca un tema, en español o inglés" autocomplete="off" enterkeyhint="search"><button class="go" type="submit">Buscar</button></form>
+    <div class="fl"><label><input type="checkbox" id="fA" checked> Artículos</label><label><input type="checkbox" id="fB" checked> Libros</label></div>
+    <div id="ex"><p class="lbl">Temas para empezar</p><div class="tp"><button type="button">Bioprocesos de fermentación</button><button type="button">Biología molecular</button><button type="button">Genética y CRISPR</button><button type="button">Inmunología</button><button type="button">Bioquímica</button><button type="button">Microbiología</button><button type="button">Medicina y regeneración de tejidos</button></div></div>
+    <div id="st" class="note"></div>
+    <div id="res"></div>
+  </section>
+  <section id="v2" class="view" hidden><h2 class="hi">Tu biblioteca</h2><p class="sub">Los artículos que guardas se quedan en este teléfono.</p><div id="lib"></div></section>
+  <section id="v3" class="view" hidden>
+    <h2 class="hi">Tutor</h2><p class="sub">Pregunta lo que quieras de biotecnología, biomedicina, bioquímica y medicina.</p>
+    <div id="chat"></div>
+    <div class="tp" id="tsug"><button type="button">¿Qué es un biorreactor?</button><button type="button">Explícame la técnica PCR</button><button type="button">Lote alimentado vs. lote</button><button type="button">¿Cómo se producen anticuerpos monoclonales?</button></div>
+    <div class="qr2"><input id="ti" placeholder="Escribe tu pregunta" enterkeyhint="send"><button class="go" id="tb" type="button">Enviar</button></div>
+  </section>
+</main>
+<nav id="nav"><button data-v="v1" class=on><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>Explorar</button><button data-v="v2"><svg viewBox="0 0 24 24"><path d="M7 4h10v16l-5-3.5L7 20z"/></svg>Biblioteca</button><button data-v="v3"><svg viewBox="0 0 24 24"><path d="M5 5h14v10H10l-5 4z"/></svg>Tutor</button></nav>
+
+<section id="rd" hidden>
+  <div class="rh"><button class="ic" id="rdX" type="button">‹ Volver</button><b id="rdT"></b></div>
+  <div class="acts" style="padding:8px 12px;margin:0"><button class="tr" id="rdAll" type="button">Traducir todo</button><button id="rdEs" type="button">Ver original</button><button id="rdSv" type="button">Guardar</button><button id="rdPdf" type="button">Descargar PDF</button><a id="rdSrc" target="_blank" rel="noopener">Abrir fuente</a></div>
+  <div id="rdSt" class="note" style="padding:0 16px;margin:4px 0"></div>
+  <div id="rdRef"></div><div id="rdb"></div>
+  <div id="qa"></div>
+  <div class="qr"><input id="qi" placeholder="Pregunta algo sobre este artículo" enterkeyhint="send"><button class="go" id="qb" type="button">Preguntar</button></div>
+</section>
+
+<dialog id="dlg">
+  <form method="dialog">
+    <strong>Ajustes</strong>
+    <label for="key">Clave de Gemini (se guarda solo en este teléfono)</label>
+    <input id="key" type="password" autocomplete="off" placeholder="Pégala aquí">
+    <label for="mdl">Modelo</label>
+    <input id="mdl" type="text">
+    <label for="gl">Glosario (un término por línea: inglés = español)</label>
+    <textarea id="gl"></textarea>
+    <p class="note">La clave la obtienes gratis en aistudio.google.com/apikey</p>
+    <div class="acts"><button class="tr" id="save" value="ok">Guardar</button><button value="x">Cerrar</button></div>
+  </form>
+</dialog>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const clean=h=>new DOMParser().parseFromString(h||'','text/html').body.textContent.trim();
+const DEF_GL=`downstream processing = procesamiento aguas abajo
+upstream processing = procesamiento aguas arriba
+fed-batch = lote alimentado
+titer = título (concentración de producto)
+scale-up = escalamiento
+bioreactor = biorreactor
+yield = rendimiento
+knockout = knockout (inactivación génica)`;
+let cfg={key:'',model:'gemini-3.8-flash',gl:DEF_GL};
+try{Object.assign(cfg,JSON.parse(localStorage.getItem('bl_cfg')||'{}'))}catch(e){}
+let R=[],lastQ='';
+
+$('#cfgBtn').onclick=()=>{$('#key').value=cfg.key;$('#mdl').value=cfg.model;$('#gl').value=cfg.gl;$('#dlg').showModal()};
+$('#save').onclick=()=>{cfg={key:$('#key').value.trim(),model:$('#mdl').value.trim()||'gemini-3.8-flash',gl:$('#gl').value};try{localStorage.setItem('bl_cfg',JSON.stringify(cfg))}catch(e){}};
+$('#ex').onclick=e=>{if(e.target.tagName==='BUTTON'){$('#q').value=e.target.textContent;$('#f').requestSubmit()}};
+
+async function gem(sys,text){
+  if(!cfg.key)throw new Error('Falta la clave de Gemini. Agrégala en Ajustes.');
+  const ac=new AbortController(),to=setTimeout(()=>ac.abort(),90000);let r;
+  try{r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(cfg.model)}:generateContent`,{signal:ac.signal,method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':cfg.key},body:JSON.stringify({systemInstruction:{parts:[{text:sys}]},contents:[{parts:[{text}]}],generationConfig:{temperature:.2}})})}catch(e){throw new Error(e.name==='AbortError'?'Gemini tardó más de 90 segundos. Prueba otro modelo en Ajustes.':e.message)}finally{clearTimeout(to)}
+  const j=await r.json();
+  if(!r.ok)throw new Error(j.error?.message||('Error '+r.status));
+  return (j.candidates?.[0]?.content?.parts||[]).map(p=>p.text||'').join('').trim();
+}
+const getJ=async u=>{const r=await fetch(u);if(!r.ok)throw new Error(r.status);return r.json()};
+
+const SRC={
+ async epmc(q){
+  const j=await getJ(`https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=${encodeURIComponent(q+' AND OPEN_ACCESS:y')}&format=json&resultType=core&pageSize=10`);
+  return (j.resultList?.result||[]).map(x=>({kind:'a',src:'Europe PMC',title:clean(x.title),authors:x.authorString||'',venue:x.journalTitle||'',year:x.pubYear||'',doi:x.doi||'',pmcid:x.pmcid||'',abs:clean(x.abstractText),url:x.doi?'https://doi.org/'+x.doi:`https://europepmc.org/article/${x.source}/${x.id}`}));
+ },
+ async oa(q){
+  const j=await getJ(`https://api.openalex.org/works?search=${encodeURIComponent(q)}&filter=is_oa:true&per-page=10`);
+  return (j.results||[]).map(x=>{let a=[];const ix=x.abstract_inverted_index||{};for(const k in ix)for(const p of ix[k])a[p]=k;
+   return {kind:'a',src:'OpenAlex',title:x.display_name||'',authors:(x.authorships||[]).slice(0,6).map(t=>t.author.display_name).join(', '),venue:x.primary_location?.source?.display_name||'',year:x.publication_year||'',doi:(x.doi||'').replace('https://doi.org/',''),abs:a.join(' '),url:x.open_access?.oa_url||x.doi||x.id}});
+ },
+ async ol(q){
+  const j=await getJ(`https://openlibrary.org/search.json?q=${encodeURIComponent(q+' AND has_fulltext:true')}&limit=8&fields=title,author_name,first_publish_year,key`);
+  return (j.docs||[]).map(x=>({kind:'b',src:'Open Library',title:x.title,authors:(x.author_name||[]).slice(0,3).join(', '),venue:'',year:x.first_publish_year||'',doi:'',abs:'',url:'https://openlibrary.org'+x.key}));
+ },
+ async ia(q){
+  const p=new URLSearchParams({q:`(${q}) AND mediatype:texts AND NOT access-restricted-item:true`,rows:8,output:'json'});
+  ['identifier','title','creator','year','description'].forEach(f=>p.append('fl[]',f));
+  const j=await getJ('https://archive.org/advancedsearch.php?'+p);
+  return (j.response?.docs||[]).map(x=>({kind:'b',src:'Internet Archive',title:x.title||'',authors:[].concat(x.creator||[]).join(', '),venue:'',year:x.year||'',doi:'',abs:clean([].concat(x.description||[]).join(' ')),url:'https://archive.org/details/'+x.identifier}));
+ }
+};
+
+$('#f').onsubmit=async e=>{
+  e.preventDefault();
+  const q0=$('#q').value.trim();if(!q0)return;
+  $('#ex').hidden=true;$('#res').innerHTML='';
+  let q=q0;
+  if(cfg.key&&/[áéíóúñ¿¡]|\b(de|la|el|en|para|con|y|del)\b/i.test(q0)){
+    $('#st').textContent='Traduciendo la búsqueda…';
+    try{q=(await gem('Traduce al inglés científico esta consulta de búsqueda bibliográfica en biomedicina, biotecnología, bioquímica o medicina. Responde solo con la consulta traducida, sin comillas.',q0)).split('\n')[0]||q0}catch(err){q=q0}
+  }
+  lastQ=q0;
+  const jobs=[];
+  if($('#fA').checked)jobs.push(['Europe PMC',SRC.epmc],['OpenAlex',SRC.oa]);
+  if($('#fB').checked)jobs.push(['Open Library',SRC.ol],['Internet Archive',SRC.ia]);
+  if(!jobs.length){$('#st').textContent='Marca al menos Artículos o Libros.';return}
+  $('#st').textContent='Buscando'+(q!==q0?` “${q}”`:'')+'…';
+  const out=await Promise.allSettled(jobs.map(j=>j[1](q)));
+  const seen=new Set(),fails=[];R=[];
+  out.forEach((o,i)=>{
+    if(o.status==='rejected'){fails.push(jobs[i][0]);return}
+    o.value.forEach(r=>{const k=(r.doi||r.title).toLowerCase();if(!r.title||seen.has(k))return;seen.add(k);R.push(r)});
+  });
+  $('#st').textContent=`${R.length} resultados`+(q!==q0?` para “${q}”`:'')+(fails.length?`. No respondieron: ${fails.join(', ')}.`:'.');
+  $('#res').innerHTML=R.length?R.map(card).join(''):'<p class="note">Sin resultados. Prueba con otras palabras.</p>';
+  if(R.length&&cfg.key)trTitles(R.slice());
+};
+
+function ref(r){return `${r.authors||'Autor desconocido'} (${r.year||'s. f.'}). ${r.title}.${r.venue?' '+r.venue+'.':''} ${r.url} [Fuente: ${r.src}]`}
+function card(r,i){
+  return `<article class="card" data-i="${i}">
+  <span class="src">${esc(r.src)}</span>
+  <h3>${esc(r.title)}</h3>
+  <div class="meta">${esc(r.authors)}${r.authors&&(r.venue||r.year)?' · ':''}${esc([r.venue,r.year].filter(Boolean).join(', '))}</div>
+  ${r.abs?`<details><summary>Original</summary><p>${esc(r.abs)}</p></details>`:''}
+  <div class="out" hidden></div>
+  <div class="acts"><button class="tr" data-a="r">Leer en la app</button><button data-a="t">Traducir resumen</button><button data-a="s">${inLib(r)?'Guardada':'Guardar'}</button><button data-a="c">Copiar referencia</button><a href="${esc(r.url)}" target="_blank" rel="noopener">Abrir fuente</a></div>
+  </article>`;
+}
+
+$('#res').onclick=async e=>{
+  const b=e.target.closest('button[data-a]');
+  if(!b){if(!e.target.closest('a,details,.out')){const k=e.target.closest('.card');if(k)openRd(R[k.dataset.i])}return}
+  const c=b.closest('.card'),r=R[c.dataset.i],o=c.querySelector('.out');
+  if(b.dataset.a==='r'){openRd(r);return}
+  if(b.dataset.a==='s'){toggleLib(r);b.textContent=inLib(r)?'Guardada':'Guardar';return}
+  if(b.dataset.a==='c'){
+    try{await navigator.clipboard.writeText(ref(r));b.textContent='Copiada'}catch(err){b.textContent='No se pudo copiar'}
+    setTimeout(()=>b.textContent='Copiar referencia',1800);return;
+  }
+  b.disabled=true;o.hidden=false;o.textContent='Traduciendo…';
+  const sys=`Eres traductor científico de biomedicina, biotecnología, bioquímica y medicina. Traduce al español el texto recibido, adaptando la terminología a su área y manteniendo coherencia terminológica en todo el texto. Conserva todas las cifras, unidades, nombres de genes, especies, siglas y datos; no agregues, resumas ni omitas información. Si un término no tiene traducción establecida, escribe tu mejor traducción y el original en inglés entre paréntesis. Contexto: ${r.venue||r.src}, ${r.year||''}; el lector buscó "${lastQ}". Glosario obligatorio:\n${cfg.gl}\nResponde solo con la traducción: primera línea el título, luego una línea en blanco y el resto del texto.`;
+  try{
+    const t=await gem(sys,r.title+(r.abs?'\n\n'+r.abs:''));
+    const [h,...rest]=t.split('\n');
+    o.innerHTML=`<h4>${esc(h.replace(/^#+\s*|\*+/g,''))}</h4>`+rest.join('\n').split(/\n\s*\n/).filter(Boolean).map(p=>`<p>${esc(p.replace(/\*\*/g,''))}</p>`).join('')+`<p class="meta">Traducción automática. Verifica con el original. Fuente: ${esc(r.src)}.</p>`;
+  }catch(err){o.textContent=err.message}
+  b.disabled=false;b.textContent='Traducir de nuevo';
+};
+
+let RD={r:null,it:[]};
+async function gemR(sys,t){for(let k=0;;k++){try{return await gem(sys,t)}catch(e){if(k>=2||!/quota|429|RESOURCE|overload|503/i.test(e.message))throw e;await new Promise(r=>setTimeout(r,5000*(k+1)))}}}
+async function trTitles(list){
+  try{
+    const out=await gemR('Traduce al español científico cada título (biomedicina, biotecnología, bioquímica, medicina). Conserva siglas, nombres de genes y especies. Cada título empieza con un marcador <<<número>>>; devuelve cada traducción con su mismo marcador, sin texto adicional.',list.map((r,i)=>`<<<${i}>>>\n${r.title}`).join('\n\n'));
+    if(R[0]!==list[0])return;
+    for(const m of out.matchAll(/<<<(\d+)>>>\s*([\s\S]*?)(?=<<<\d+>>>|$)/g)){const i=+m[1],t=m[2].trim(),h=document.querySelector(`.card[data-i="${i}"] h3`);if(h&&t&&list[i]){list[i].es=t;h.insertAdjacentHTML('afterend',`<div class="es">${esc(t)}</div>`)}}
+  }catch(e){}
+}
+const SYS=r=>`Eres traductor científico de biomedicina, biotecnología, bioquímica y medicina. Traduce al español cada fragmento, adaptando la terminología al área y manteniendo coherencia en todo el artículo "${r.title}" (${r.venue||r.src}, ${r.year||''}). Conserva cifras, unidades, genes, especies, siglas y datos; no agregues, resumas ni omitas nada. Si un término no tiene traducción establecida, pon tu mejor traducción y el original en inglés entre paréntesis. Glosario obligatorio:\n${cfg.gl}\nCada fragmento empieza con un marcador <<<número>>>. Devuelve cada traducción precedida por su mismo marcador, sin texto adicional.`;
+async function ft(r){
+  let id=r.pmcid;
+  if(!id&&r.doi){try{const j=await getJ('https://www.ebi.ac.uk/europepmc/webservices/rest/search?query='+encodeURIComponent('DOI:"'+r.doi+'"')+'&format=json&resultType=lite');id=j.resultList?.result?.[0]?.pmcid}catch(e){}}
+  if(!id)return null;
+  const res=await fetch(`https://www.ebi.ac.uk/europepmc/webservices/rest/${id}/fullTextXML`);if(!res.ok)return null;
+  const d=new DOMParser().parseFromString(await res.text(),'text/xml'),out=[];
+  d.querySelectorAll('body sec > title, body sec > p, body > p, body list-item > p').forEach(n=>{const t=n.textContent.replace(/\s+/g,' ').trim();if(t)out.push({h:n.localName==='title',t})});
+  return out;
+}
+function draw(){
+  $('#rdb').innerHTML=RD.it.map((x,i)=>{const g=x.h?'h2':'p';return `<${g} data-k="${i}"${x.tr?' class="hasT"':''}>${esc(x.t)}</${g}>${x.tr?`<div class="t2">${esc(x.tr)}</div>`:''}`}).join('');
+}
+function putT(i){
+  const el=document.querySelector(`#rdb [data-k="${i}"]`);
+  if(!el||el.nextElementSibling?.classList.contains('t2'))return;
+  el.classList.add('hasT');const d=document.createElement('div');d.className='t2';d.textContent=RD.it[i].tr;el.after(d);
+}
+async function openRd(r){
+  RD={r,it:[]};
+  $('#rd').hidden=false;document.body.style.overflow='hidden';
+  $('#rdT').textContent=r.es||r.title;$('#rdSv').textContent=inLib(r)?'Guardada':'Guardar';$('#rdSrc').href=r.url;$('#qa').innerHTML='';$('#rdb').className='es';$('#rdEs').textContent='Ver original';
+  if(r.abs)RD.it.push({h:1,t:'Resumen'},{t:r.abs});
+  draw();$('#rdSt').textContent='Buscando el texto completo…';
+  try{
+    const full=await ft(r);if(RD.r!==r)return;
+    if(full&&full.length){RD.it.push(...full);$('#rdSt').textContent='Texto completo. Toca un párrafo para traducirlo.'}
+    else $('#rdSt').textContent='El texto completo no está disponible en acceso abierto aquí. Usa Abrir fuente.';
+  }catch(e){$('#rdSt').textContent='No se pudo cargar el texto completo.'}
+  draw();
+  if(cfg.key&&RD.r===r)trI(RD.it.map((_,i)=>i)).catch(err=>{$('#rdSt').textContent=err.message+' Toca Traducir todo para reintentar.'});
+  else if(!cfg.key)$('#rdSt').textContent='Agrega tu clave de Gemini en Ajustes para traducir.';
+}
+async function trI(idx){
+  const cur=RD,r=RD.r,todo=idx.filter(i=>!RD.it[i].tr);let n=0,s=0;
+  while(s<todo.length){
+    const ch=[];let len=0;
+    while(s<todo.length&&(!ch.length||len+RD.it[todo[s]].t.length<3500)){len+=RD.it[todo[s]].t.length;ch.push(todo[s++])}
+    $('#rdSt').textContent=`Traduciendo… ${n}/${todo.length}`;
+    const out=await gemR(SYS(r),ch.map(i=>`<<<${i}>>>\n${RD.it[i].t}`).join('\n\n'));
+    if(RD!==cur)return;
+    for(const m of out.matchAll(/<<<(\d+)>>>\s*([\s\S]*?)(?=<<<\d+>>>|$)/g)){const i=+m[1];if(RD.it[i]&&m[2].trim()){RD.it[i].tr=m[2].trim();putT(i)}}
+    n+=ch.length;
+  }
+  $('#rdSt').textContent='Listo.';
+}
+$('#rdX').onclick=()=>{$('#rd').hidden=true;document.body.style.overflow=''};
+$('#rdEs').onclick=()=>{const on=$('#rdb').classList.toggle('es');$('#rdEs').textContent=on?'Ver original':'Solo español'};
+$('#rdAll').onclick=async()=>{try{await trI(RD.it.map((_,i)=>i))}catch(err){$('#rdSt').textContent=err.message}};
+$('#rdb').onclick=async e=>{
+  const el=e.target.closest('[data-k]');if(!el)return;
+  const i=+el.dataset.k;if(RD.it[i].tr)return;
+  try{await trI([i])}catch(err){$('#rdSt').textContent=err.message}
+};
+$('#qb').onclick=async()=>{
+  const q=$('#qi').value.trim();if(!q||!RD.r)return;
+  const box=$('#qa');box.insertAdjacentHTML('beforeend',`<p><b>${esc(q)}</b></p><p class="a">Pensando…</p>`);
+  const a=box.lastElementChild;$('#qi').value='';box.scrollTop=box.scrollHeight;
+  try{a.textContent=await gem(`Eres un tutor de biotecnología, biomedicina, bioquímica y medicina. Responde siempre en español, de forma clara y sencilla, para un estudiante universitario. Usa el artículo como contexto, pero responde también con tu conocimiento general cuando la pregunta sea básica o general; si algo no viene del artículo, indícalo brevemente. Artículo: "${RD.r.title}".\n\nTEXTO DEL ARTÍCULO:\n`+RD.it.map(x=>x.t).join('\n').slice(0,60000),q)}catch(err){a.textContent=err.message}
+  box.scrollTop=box.scrollHeight;
+};
+$('#qi').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();$('#qb').click()}};
+
+let LIB=[];try{LIB=JSON.parse(localStorage.getItem('bl_lib')||'[]')}catch(e){}
+const lk=r=>(r.doi||r.url||r.title).toLowerCase();
+const inLib=r=>LIB.some(x=>lk(x)===lk(r));
+function toggleLib(r){if(inLib(r))LIB=LIB.filter(x=>lk(x)!==lk(r));else LIB.unshift(r);try{localStorage.setItem('bl_lib',JSON.stringify(LIB))}catch(e){}}
+function renderLib(){$('#lib').innerHTML=LIB.length?LIB.map((r,i)=>`<article class="card" data-i="${i}"><span class="src">${esc(r.src)}</span><h3>${esc(r.es||r.title)}</h3><div class="meta">${esc(r.authors)}${r.year?' · '+esc(r.year):''}</div><div class="acts"><button class="tr" data-l="r">Leer</button><button data-l="d">Quitar</button></div></article>`).join(''):'<p class="note">Aún no guardas nada. Toca Guardar en un artículo y lo encontrarás aquí.</p>'}
+$('#lib').onclick=e=>{const b=e.target.closest('button[data-l]');if(!b)return;const r=LIB[b.closest('.card').dataset.i];if(b.dataset.l==='r')openRd(r);else{toggleLib(r);renderLib()}};
+$('#rdSv').onclick=()=>{toggleLib(RD.r);$('#rdSv').textContent=inLib(RD.r)?'Guardada':'Guardar'};
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.view').forEach(v=>v.hidden=v.id!==b.dataset.v);
+  document.querySelectorAll('#nav button').forEach(x=>x.classList.toggle('on',x===b));
+  if(b.dataset.v==='v2')renderLib();window.scrollTo(0,0);
+});
+$('#brand').onclick=()=>{document.querySelector('#nav button[data-v="v1"]').click();$('#ex').hidden=false;$('#res').innerHTML='';$('#st').textContent='';$('#q').value=''};
+let CH=[];
+function bub(c,t){const d=document.createElement('div');d.className='m '+c;d.textContent=t;$('#chat').append(d);d.scrollIntoView({block:'end',behavior:'smooth'});return d}
+async function ask(q){
+  bub('u',q);const a=bub('b','Pensando…');
+  const h=CH.slice(-6).map(m=>(m.r==='u'?'Estudiante: ':'Tutor: ')+m.t).join('\n');
+  try{
+    const t=await gem('Eres un tutor experto en biotecnología, biomedicina, bioquímica y medicina, de trato cercano y profesional. Responde siempre en español, de forma clara y bien organizada, con ejemplos cuando ayuden y sin rodeos. Adapta el nivel a un estudiante universitario de ingeniería biotecnológica. Si no estás seguro de algo, dilo.',(h?'Conversación previa:\n'+h+'\n\n':'')+'Estudiante: '+q);
+    a.textContent=t.replace(/\*\*/g,'');CH.push({r:'u',t:q},{r:'b',t});
+  }catch(e){a.textContent=e.message}
+}
+$('#tb').onclick=()=>{const q=$('#ti').value.trim();if(q){$('#ti').value='';ask(q)}};
+$('#ti').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();$('#tb').click()}};
+$('#tsug').onclick=e=>{if(e.target.tagName==='BUTTON')ask(e.target.textContent)};
+
+$('#rdPdf').onclick=()=>{
+  const r=RD.r;if(!r)return;
+  const pend=RD.it.filter(x=>!x.tr).length;
+  if(cfg.key&&pend&&!confirm('Aún hay '+pend+' párrafos sin traducir. ¿Descargar el PDF de todos modos?'))return;
+  $('#rdRef').innerHTML=`<h1>${esc(r.es||r.title)}</h1>${r.es?`<p><i>${esc(r.title)}</i></p>`:''}<p>${esc([r.authors,r.venue,r.year].filter(Boolean).join(' · '))}</p>${r.doi?`<p>DOI: ${esc(r.doi)}</p>`:''}<p>Fuente: ${esc(r.src)} · ${esc(r.url)}</p><p>Traducción automática generada con IA. Verifica con el original.</p>`;
+  const t=document.title;document.title=(r.es||r.title).replace(/[\\/:*?"<>|]/g,'').slice(0,80);
+  const back=()=>{document.title=t;window.removeEventListener('afterprint',back)};
+  window.addEventListener('afterprint',back);
+  window.print();
+};
+
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>
